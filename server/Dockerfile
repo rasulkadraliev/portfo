@@ -2,7 +2,13 @@
 FROM python:3.9
 
 # 2
-RUN pip install Flask gunicorn gspread oauth2client google-api-python-client google-auth-httplib2 google-auth-oauthlib
+RUN pip install Flask \
+gunicorn \
+gspread \
+oauth2client \
+google-api-python-client \
+google-auth-httplib2 \
+google-auth-oauthlib
 
 # 3
 COPY src/ /app
