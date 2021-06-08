@@ -1,11 +1,8 @@
 import os.path
-
-from oauth2client.service_account import ServiceAccountCredentials
-from googleapiclient import discovery
-
+from google_sheets_api import *
 from flask import Flask, render_template, request, make_response
-
 from datetime import datetime, date
+
 app = Flask(__name__)
 
 
@@ -26,28 +23,13 @@ def html_page(page_name):
 
 @app.route('/submit_form', methods=['POST', 'GET'])
 def submit_form():
+    # Create a variable for template date for copyright in footer
     today = date.today()
     copyrightdate = today.strftime('%Y')
+
     if request.method == "POST":
-        # use creds to create a client to interact with the Google Drive API
-        scope = ['https://www.googleapis.com/auth/spreadsheets',
-                 'https://www.googleapis.com/auth/drive.file',
-                 'https://www.googleapis.com/auth/drive']
-        creds = ServiceAccountCredentials.from_json_keyfile_name('creds.json', scope)
-        service = discovery.build('sheets', 'v4', credentials=creds)
-
         # The ID of the spreadsheet to update.
-        spreadsheet_id = '1iIzn5m_mw3DaUK7l4HzNNqKhO2n1rwyPLV0yFMB2rk4'  # TODO: Update placeholder value.
-
-        # The A1 notation of a range to search for a logical table of data.
-        # Values will be appended after the last row of the table.
-        range_ = 'A1'  # TODO: Update placeholder value.
-
-        # How the input data should be interpreted.
-        value_input_option = "RAW"  # TODO: Update placeholder value.
-
-        # How the input data should be inserted.
-        insert_data_option = 'INSERT_ROWS'  # TODO: Update placeholder value.
+        spreadsheet_id = '1iIzn5m_mw3DaUK7l4HzNNqKhO2n1rwyPLV0yFMB2rk4'
 
         data = request.form.to_dict()
         date_time = datetime.now()
@@ -61,12 +43,8 @@ def submit_form():
                 ]
             ]
         }
-
-        req = service.spreadsheets().values().append(spreadsheetId=spreadsheet_id, range=range_,
-                                                     valueInputOption=value_input_option,
-                                                     insertDataOption=insert_data_option, body=value_range_body)
-        req.execute()
-        return render_template("index.html", showmodal = True, copyRightDate=copyrightdate)
+        google_sheets_api(spreadsheet_id, value_range_body)
+        return render_template("index.html", showmodal=True, copyRightDate=copyrightdate)
 
 
 if __name__ == '__main__':
