@@ -1,16 +1,23 @@
 {
   "name": "portfo",
   "version": "1.0.0",
-  "description": "",
+  "description": "This is code for my portfolio web-site www.kadraliev.com. Used Flask application and integration with Google Sheets API",
   "main": "index.js",
-  "dependencies": {},
   "devDependencies": {
-    "firebase-tools": "^9.11.0"
+    "firebase-tools": "^11.1.0"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rasulkadraliev/portfo.git"
+  },
+  "bugs": {
+    "url": "https://github.com/rasulkadraliev/portfo/issues"
+  },
+  "homepage": "https://github.com/rasulkadraliev/portfo#readme"
 }
